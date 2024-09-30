@@ -1,5 +1,7 @@
-import { forwardRef } from 'react';
+'use client';
+
 import Link from 'next/link';
+import { forwardRef } from 'react';
 import { type VariantProps, tv } from 'tailwind-variants';
 
 import { cn } from '@/lib/utils';

@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import debounce from 'lodash.debounce';
 
-import { useUnmount } from './use-unmount';
+import { useUnmount } from '@/hooks/use-unmount';
 
 /** Configuration options for controlling the behavior of the debounced function. */
 type DebounceOptions = {

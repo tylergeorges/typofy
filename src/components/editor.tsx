@@ -3,15 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 import maker from 'makerjs';
 import opentype from 'opentype.js';
-import Prism from 'prismjs';
-import { toast } from 'sonner';
+import { highlightAll } from 'prismjs';
 import 'prismjs/components/prism-markup'; // Language
 import 'prismjs/themes/prism-tomorrow.css'; // Theme
+import { toast } from 'sonner';
 
 import { useDebounceCallback } from '@/hooks/use-debounced-callback';
 import { useFont } from '@/hooks/use-font';
 import { useClient } from '@/hooks/use-client';
-import { formatHTML } from '@/lib/utils';
+import { formatHtml } from '@/lib/format-html';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -113,13 +113,11 @@ export const Editor = () => {
 
     const dxf = maker.exporter.toDXF(textModel, { units: units, usePOLYLINE: true });
 
-    const formatted = await formatHTML(svg);
+    const formatted = await formatHtml(svg);
     svgRenderer.innerHTML = svg;
-
     svgRenderer.setAttribute('data-dxf', dxf);
-
     svgOutput.textContent = formatted;
-    Prism.highlightAll();
+    highlightAll();
   };
 
   const callRenderText = (config: Partial<RenderTextConfig>) => {
@@ -250,7 +248,7 @@ export const Editor = () => {
   };
 
   useEffect(() => {
-    Prism.highlightAll();
+    highlightAll();
   }, []);
 
   return (
@@ -349,15 +347,15 @@ export const Editor = () => {
           <SvgRenderer ref={svgRendererRef} />
         </div>
 
-        <div className="relative size-full max-h-96 max-w-[90%] md:max-w-3xl">
-          <pre className="relative size-full max-h-96 max-w-[90%] md:max-w-3xl">
-            {isClient && (
+        {isClient && (
+          <div className="relative size-full max-h-96 max-w-[90%] md:max-w-3xl">
+            <pre className="relative size-full max-h-96 max-w-[90%] md:max-w-3xl">
               <code className="language-html" ref={svgOutputRef}>
                 {` `}
               </code>
-            )}
-          </pre>
-        </div>
+            </pre>
+          </div>
+        )}
 
         <div className="w-full vertical">
           <Button onClick={copy}>Copy To Clipboard</Button>
