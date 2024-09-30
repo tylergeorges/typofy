@@ -1,21 +1,16 @@
-'use client';
+import beautify from 'js-beautify';
 
-import prettier from 'prettier/standalone.js';
-import parserHTML from 'prettier/parser-html.js';
-
-export const formatHtml = async (htmlString: string) => {
-  return prettier.format(htmlString, {
-    parser: 'html',
-    trailingComma: 'none',
-    arrowParens: 'avoid',
-    semi: true,
-    singleQuote: true,
-    bracketSpacing: true,
-    printWidth: 60,
-    useTabs: false,
-    tabWidth: 2,
-    quoteProps: 'as-needed',
-    jsxSingleQuote: false,
-    plugins: [parserHTML]
+export const formatHtml = (htmlString: string) => {
+  return beautify.html_beautify(htmlString, {
+    indent_size: 4,
+    indent_char: ' ',
+    indent_with_tabs: true,
+    preserve_newlines: true,
+    indent_scripts: 'normal',
+    end_with_newline: false,
+    wrap_line_length: 60,
+    indent_inner_html: true,
+    indent_empty_lines: false,
+    wrap_attributes: 'force-expand-multiline'
   });
 };

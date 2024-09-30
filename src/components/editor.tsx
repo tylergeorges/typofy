@@ -66,7 +66,7 @@ export const Editor = () => {
     setCurrentFont(font);
   };
 
-  const renderText = async (config: RenderTextConfig) => {
+  const renderText = (config: RenderTextConfig) => {
     const svgRenderer = svgRendererRef.current;
     const svgOutput = svgOutputRef.current;
 
@@ -113,9 +113,10 @@ export const Editor = () => {
 
     const dxf = maker.exporter.toDXF(textModel, { units: units, usePOLYLINE: true });
 
-    const formatted = await formatHtml(svg);
     svgRenderer.innerHTML = svg;
     svgRenderer.setAttribute('data-dxf', dxf);
+
+    const formatted = formatHtml(svg);
     svgOutput.textContent = formatted;
     highlightAll();
   };
